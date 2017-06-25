@@ -1,11 +1,11 @@
 class Post
 
-  def self.post_types
-    [Memo, Link, Task]
+  def self.post_types # статический метод
+    [Link, Memo, Task] # указаны варианты постов
   end
 
   def self.create(type_index)
-    return post_types[type_index].new
+    return post_types[type_index].new # создаем выбранный класс
   end
 
   def initialize
