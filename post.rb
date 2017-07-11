@@ -9,7 +9,7 @@ class Post
   #end
 
   def self.post_types # статический метод
-    {'Memo' => Memo, 'Task' => Task, 'Link' => Link} # указаны варианты постов
+    {'Memo' => Memo, 'Task' => Task, 'Link' => Link, 'Tweet' => Tweet} # указаны варианты постов
   end
 
   def self.create(type)
