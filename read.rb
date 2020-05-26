@@ -11,7 +11,7 @@ require_relative 'post'
 require_relative 'link'
 require_relative 'task'
 require_relative 'memo'
-#require_relative 'tweet'
+require_relative 'tweet'
 
 # id, limit, type
 
@@ -33,11 +33,13 @@ OptionParser.new do |opt| # создали новый OptionParser
   opt.on('--limit NUMBER', 'сколько последних постов показать (по умолчанию все)') { |o| options[:limit] = o} #
 
 end.parse!
-unless options[:id].nil?
-  result = Post.find_by_id(options[:id])
-else
-  result = Post.find_all(options[:limit], options[:type])
-end
+
+result =
+  unless options[:id].nil?
+    Post.find_by_id(options[:id])
+  else
+    Post.find_all(options[:limit], options[:type])
+  end
 
 if result.is_a? Post
   puts "Запись #{result.class.name}, id = #{options[:id]}"

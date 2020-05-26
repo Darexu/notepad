@@ -11,7 +11,7 @@ require_relative 'post'
 require_relative 'link'
 require_relative 'task'
 require_relative 'memo'
-#require_relative 'tweet'
+require_relative 'tweet'
 
 puts "Привет, я твой блокнот! Версия 2 + Sqlite"
 puts "Что хотите записать в блокнот?"
