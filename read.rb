@@ -7,11 +7,11 @@ if (Gem.win_platform?)
   end
 end
 
-require_relative 'post.rb'
-require_relative 'link.rb'
-require_relative 'task.rb'
-require_relative 'memo.rb'
-require_relative 'tweet.rb'
+require_relative 'post'
+require_relative 'link'
+require_relative 'task'
+require_relative 'memo'
+#require_relative 'tweet'
 
 # id, limit, type
 
@@ -33,12 +33,15 @@ OptionParser.new do |opt| # создали новый OptionParser
   opt.on('--limit NUMBER', 'сколько последних постов показать (по умолчанию все)') { |o| options[:limit] = o} #
 
 end.parse!
-
-result = Post.find(options[:limit], options[:type], options[:id])
+unless options[:id].nil?
+  result = Post.find_by_id(options[:id])
+else
+  result = Post.find_all(options[:limit], options[:type])
+end
 
 if result.is_a? Post
   puts "Запись #{result.class.name}, id = #{options[:id]}"
-  result.to_stings.each do |line|
+  result.to_strings.each do |line|
     puts line
   end
 else # покажем таблицу результатов
@@ -51,7 +54,4 @@ else # покажем таблицу результатов
       print  "| #{element.to_s.delete("\\n\\r")[0..40]}\t"
     end
   end
-
 end
-
-puts

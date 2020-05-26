@@ -22,16 +22,11 @@ class Task < Post
 
     deadline = "Крайний строк: #{@due_date}"
 
-    return [deadline, @text, time_string]
+    [deadline, @text, time_string]
   end
 
   def to_db_hash # метод супер вызывает родительский метод с таким же названием
-    return super.merge(
-                    {
-                        'text' => @text,
-                        'due_date' => @due_date.to_s
-                    }
-    )
+    super.merge('text' => @text, 'due_date' => @due_date.to_s)
   end
 
   def load_data(data_hash)
@@ -40,5 +35,4 @@ class Task < Post
     # теперь прописываем свое специфичное поле
     @due_date = Date.parse(data_hash['due_date'])
   end
-
 end

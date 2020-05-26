@@ -1,13 +1,12 @@
-
 require 'twitter'
 
 class Tweet < Post
 
   @@CLIENT = Twitter::REST::Client.new do |config|
-    config.consumer_key = '05xwEwc8wQR59WrESX9PwyfiP'
-    config.consumer_secret = 'IWX3Ezd2D12jSjphVZ2IAkJA8oX4Ak2YplfwfZMLxJFLTJYAEx'
-    config.access_token = '884177469221339136-I2rLAm7GhFarqs0KJX8GnSydPyxk83v'
-    config.access_token_secret = 'Usy7331CdWsTmEQuMc1ggms6Qry3fKb4kiTakUUGSN5VX'
+    config.consumer_key = ''
+    config.consumer_secret = ''
+    config.access_token = ''
+    config.access_token_secret = ''
   end
 
   def read_from_console
@@ -20,19 +19,14 @@ class Tweet < Post
     puts "Твит отправлен"
   end
 
-
   def to_strings
     time_string = "Создано: #{@created_at.strftime("%Y.%m.%d, %H:%M:%S")} \n\r \n\r"
 
-    return @text.unshift(time_string)
+    @text.unshift(time_string)
   end
 
   def to_db_hash # метод супер вызывает родительский метод с таким же названием
-    return super.merge(
-        {
-            'text' => @text # массив строк делаем одной большой строкой
-        }
-    )
+    super.merge('text' => @text)
   end
 
   def load_data(data_hash)
@@ -41,5 +35,4 @@ class Tweet < Post
     # теперь прописываем свое специфичное поле
     @text = data_hash['text'].split('\n\r')
   end
-
 end

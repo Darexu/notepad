@@ -7,10 +7,10 @@ if (Gem.win_platform?)
   end
 end
 
-require_relative 'post.rb'
-require_relative 'link.rb'
-require_relative 'task.rb'
-require_relative 'memo.rb'
+require_relative 'post'
+require_relative 'link'
+require_relative 'task'
+require_relative 'memo'
 
 puts "Привет, я твой блокнот!"
 puts "Что хотите записать в блокнот?"
@@ -19,8 +19,7 @@ choices = Post.post_types
 
 choice = -1 # указываем неверное значение
 
-until choice >= 1 && choice < choices.size
-
+until choice >= 0 && choice < choices.size
   choices.each_with_index do |type, index|
     puts "\t#{index}. #{type}"
   end
@@ -28,7 +27,7 @@ until choice >= 1 && choice < choices.size
   choice = STDIN.gets.chomp.to_i
 end
 
-entry = Post.create(choice)
+entry = Post.create(choices[choice])
 
 entry.read_from_console
 
