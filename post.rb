@@ -2,7 +2,7 @@ require 'sqlite3'
 
 class Post
 
-  @@SQLITE_DB_FILE = 'notepad.sqlite'
+  SQLITE_DB_FILE = 'notepad.sqlite'.freeze
 
   def self.post_types
     {'Memo' => Memo, 'Task' => Task, 'Link' => Link, 'Tweet' => Tweet} # указаны варианты постов
@@ -13,10 +13,15 @@ class Post
   end
 
   def self.find_by_id(id)
-    db = SQLite3::Database.open(@@SQLITE_DB_FILE)
+    db = SQLite3::Database.open(SQLITE_DB_FILE)
     db.results_as_hash = true
 
-    result = db.execute("SELECT * FROM posts WHERE rowid = ?", id)
+    begin
+      result = db.execute('SELECT * FROM posts WHERE  rowid = ?', id)
+    rescue SQLite3::SQLException => e
+      puts "Не удалось выполнить запрос в базе #{SQLITE_DB_FILE}"
+      abort e.message
+    end
 
     db.close
 
@@ -35,7 +40,7 @@ class Post
   end
 
   def self.find_all(limit, type)
-    db = SQLite3::Database.open(@@SQLITE_DB_FILE)
+    db = SQLite3::Database.open(SQLITE_DB_FILE)
     db.results_as_hash = false
 
     # Формируем зпрос в базу с нежными условиями
@@ -46,7 +51,12 @@ class Post
 
     query += "LIMIT :limit " unless limit.nil?
 
-    statement = db.prepare(query) # метод prepare готовит запрос к выполнению
+    begin
+      statement = db.prepare(query) # метод prepare готовит запрос к выполнению
+    rescue SQLite3::SQLException => e
+      puts "Не удалось выполнить запрос в базе #{SQLITE_DB_FILE}"
+      abort e.message
+    end
 
     statement.bind_param('type', type) unless type.nil?
     statement.bind_param('limint', limit) unless limit.nil?
