@@ -7,11 +7,11 @@ if (Gem.win_platform?)
   end
 end
 
-require_relative 'post'
-require_relative 'link'
-require_relative 'task'
-require_relative 'memo'
-require_relative 'tweet'
+require_relative 'lib/post'
+require_relative 'lib/link'
+require_relative 'lib/task'
+require_relative 'lib/memo'
+require_relative 'lib/tweet'
 
 puts "Привет, я твой блокнот! Версия 2 + Sqlite"
 puts "Что хотите записать в блокнот?"
