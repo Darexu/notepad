@@ -101,7 +101,7 @@ class Post
   end
 
   def save_to_db
-    db = SQLite3::Database.open(@@SQLITE_DB_FILE)
+    db = SQLite3::Database.open(SQLITE_DB_FILE)
     db.results_as_hash = true
 
     db.execute(
